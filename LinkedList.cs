@@ -115,5 +115,17 @@ namespace LinkedList
         {
             return FindNodeAt(position).Data;
         }
+
+        public void RemoveAt(int position)
+        {
+            ListNode node = FindNodeAt(position);
+            FindNodeAt(position - 1).NextNode = node.NextNode;
+            node = null;
+        }
+
+        public void Remove(T data)
+        {
+            RemoveAt(GetIndexOf(data));
+        }
     }
 }
