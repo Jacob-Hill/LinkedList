@@ -51,6 +51,21 @@ namespace LinkedList
 
         public void Insert(T data, int position)
         {
+            if (position < 0 || position > length) 
+            {
+                throw new Exception("Position is out of bounds");
+            }
+            else if (head == null || position == length)
+            {
+                Add(data);
+            }
+            else
+            {
+                ListNode prevNode = FindNodeAt(position);
+                ListNode newNode = new ListNode(data, FindNodeAt(position - 1));
+                newNode.NextNode = prevNode;
+            }
+            length++;
 
         }
 
@@ -60,14 +75,15 @@ namespace LinkedList
             if (! head.Data.Equals(data)) 
             {
                 ListNode currentNode = head;
-                while(currentNode.NextNode!=null && !currentNode.Data.Equals(data))
+                while(!currentNode.Data.Equals(data))
                 {
                     (currentNode, counter) = FindNextNode(currentNode, counter);
+                    if (currentNode.NextNode == null)
+                    {
+                        throw new Exception("Data not in Linked List");
+                    }
                 }
-                if (currentNode.NextNode == null)
-                {
-                    throw new Exception("Data not in Linked List");
-                }
+                
             }
             return counter;
         }
@@ -77,12 +93,27 @@ namespace LinkedList
             return (currentNode.NextNode, position + 1);
         }
 
-        public T GetDataFromPosition(int position)
+        private ListNode FindNodeAt(int position)
         {
-            if (position >= length)
+            int counter = 0;
+            ListNode currentNode = head;
+            if (position >= length || position < 0)
             {
-                throw new Exception("Position is not within bounds of the list");
+                throw new Exception("Position is out of bounds");
             }
+            else
+            {
+                while (counter != position)
+                {
+                    (currentNode, counter) = FindNextNode(currentNode, counter);
+                }
+            }
+            return currentNode;
+        }
+
+        public T GetDataAt(int position)
+        {
+            return FindNodeAt(position).Data;
         }
     }
 }
