@@ -119,13 +119,51 @@ namespace LinkedList
         public void RemoveAt(int position)
         {
             ListNode node = FindNodeAt(position);
-            FindNodeAt(position - 1).NextNode = node.NextNode;
+            if (node != head)
+            {
+                FindNodeAt(position - 1).NextNode = node.NextNode;
+                if (node == tail)
+                {
+                    tail = FindNodeAt(position - 1);
+                }
+            }
+            else
+            {
+                if (length != 1)
+                {
+                    head = FindNodeAt(position + 1);
+                }
+                else
+                {
+                    head = null;
+                    tail = null;
+                }
+            }
             node = null;
+            length--;
         }
 
         public void Remove(T data)
         {
             RemoveAt(GetIndexOf(data));
+        }
+
+        public int Count()
+        {
+            return length;
+        }
+
+        public bool Contains(T data)
+        {
+            try
+            {
+                GetIndexOf(data);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

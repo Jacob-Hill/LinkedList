@@ -15,6 +15,9 @@ namespace LinkedList
             Console.WriteLine(testList.GetDataAt(1));
             Console.WriteLine(testList.GetDataAt(2));
             Console.WriteLine(testList.GetDataAt(3));
+            Console.WriteLine(testList.Contains("123"));
+            testList.Remove("123");
+            Console.WriteLine(testList.Contains("123"));
             Console.ReadLine();
         }
     }
